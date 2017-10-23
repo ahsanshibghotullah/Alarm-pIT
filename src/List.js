@@ -6,7 +6,7 @@ const List = () => {
     return (
         <View style={story}>
             <Text style={storyText}>
-                {mystory}
+                
             </Text>
         </View>
     );
