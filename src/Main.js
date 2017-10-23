@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
-import Button from './component/Button';
+import { Button } from './component';
 
 class Main extends Component {
     render() {
