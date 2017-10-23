@@ -17,7 +17,7 @@ class Main extends Component {
                     styleText={styleText}
                     onPress={this.onButtonPress.bind(this)}
                     >
-                    ada
+                    +
                     </Button>
                 </View>
             </View>
@@ -35,6 +35,7 @@ const styles = {
         alignItems: 'flex-end',
         marginRight: 20,
         marginBottom: 50,
+        flex: 1,
     },
     styleButton: {
         borderColor: 'black',
@@ -46,6 +47,7 @@ const styles = {
     },
     styleText: {
         color: 'white',
+        fontSize: 20,
     },
 
 }
