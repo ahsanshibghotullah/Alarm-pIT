@@ -2,9 +2,12 @@ import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import { Button } from './component';
 
+import { addList } from './actions/listActions';
 class Main extends Component {
-    onButtonPress() {
+    onAddList = (teks) => {
+        const { dispatch } = this.props;
 
+        dispatch(addList(teks))
     }
 
     render() {
@@ -15,7 +18,7 @@ class Main extends Component {
                     <Button
                     styleButton={styleButton}
                     styleText={styleText}
-                    onPress={this.onButtonPress.bind(this)}
+                    onPress={this.onAddList}
                     >
                     +
                     </Button>
