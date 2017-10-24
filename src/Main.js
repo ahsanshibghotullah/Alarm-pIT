@@ -12,6 +12,7 @@ class Main extends Component {
         return (
             <View style={containerStyle}>
                 <View style={styleWrapButton}>
+                    {/* tombol buat pindah ke Add Form */}
                     <Button
                     styleButton={styleButton}
                     styleText={styleText}
@@ -49,7 +50,6 @@ const styles = {
         color: 'white',
         fontSize: 20,
     },
-
-}
+};
 
 export default Main;
