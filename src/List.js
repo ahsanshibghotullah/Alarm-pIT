@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text } from 'react-native';
 
 const List = () => {
-    const { story, storyTextt } = styles;
+    const { story, storyText } = styles;
     return (
         <View style={story}>
             <Text style={storyText}>
@@ -10,7 +10,7 @@ const List = () => {
             </Text>
         </View>
     );
-}
+};
 
 const styles = {
     story: {
