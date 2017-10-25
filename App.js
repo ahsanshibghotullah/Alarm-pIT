@@ -5,13 +5,20 @@ import {
   Text,
   View
 } from 'react-native';
-import Main from './src/Main'
+import { Provider } from 'react-redux';
+import { createStore, applyMiddleware } from 'redux'; 
+import ReduxThunk from 'redux-thunk';
 import Router from './Router'
+import reducers from './src/reducers';
 
-export default class App extends Component<{}> {
+export default class App extends Component {
   render() {
+    const store = createStore(reducers, {}, applyMiddleware(ReduxThunk));
+
     return (
-      <Router />
+      <Provider store={store}>
+        <Router />
+      </Provider>
     );
   }
 }
