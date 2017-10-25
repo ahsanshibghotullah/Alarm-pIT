@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
-import { Actions } from 'react-native-router-flux';
+import { View } from 'react-native';
 import { Button } from './component';
 
 class Main extends Component {
-    onButtonPress(){
-        Actions.add();        
+    onButtonPress() {
+     
     }
 
     render() {
