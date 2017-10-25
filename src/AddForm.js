@@ -1,29 +1,24 @@
-import React, { Component } from 'react';
-import { View, Picker } from 'react-native';
+import React from 'react';
+import { View, Picker, Modal } from 'react-native';
 import { Field, Button } from './component';
 
-class AddForm extends Component {
-    state = {
-        text: '',
-        date: '',
-        date2: ''
-    }
-
-    onButtonPress() {
-
-    }
-    
-    render() {
-        const { container, styleButton, pickerStyle, wrapPicker } = styles;
-        return (
+const AddForm = ({ visible, value, onChangeText, onPress }) => {
+    const { container, styleButton, pickerStyle, wrapPicker } = styles;
+    return (
+        <Modal
+        visible={visible}
+        transparent
+        animationType="slide"
+        onRequestClose={() => {}}
+        >
             <View style={container}>
                 <View>
                     <Field 
                     label="Label"
                     placeholder="..."
                     autoCorrect={true}
-                    onChangeText={text => this.setState({ text })}
-                    value={this.state.text}
+                    onChangeText={onChangeText}
+                    value={value}
                     />
                 </View>
 
@@ -57,12 +52,15 @@ class AddForm extends Component {
                     Add
                 </Button>
             </View>
-        );
-    }
-}
+        </Modal>
+    );
+};
+
 
 const styles = {
     container: {
+        backgroundColor: 'rgba(0, 0, 0, 0.75)',
+        position: 'relative',
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',

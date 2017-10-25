@@ -3,6 +3,10 @@ import { View } from 'react-native';
 import { Button } from './component';
 
 class Main extends Component {
+    state ={
+        showModal: false
+    }
+    
     onButtonPress() {
      
     }
