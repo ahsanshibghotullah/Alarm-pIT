@@ -5,14 +5,14 @@ import {
   Text,
   View
 } from 'react-native';
-import Main from './src/Main';
+import Main from './src/Main'
+import Router from './Router'
 
-export default class App extends Component {
+export default class App extends Component<{}> {
   render() {
     return (
-      <Provider>
-        <Main />
-      </Provider>
+      <Router />
     );
   }
 }
+

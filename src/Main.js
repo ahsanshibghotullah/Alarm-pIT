@@ -1,17 +1,15 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
+import { Actions } from 'react-native-router-flux';
 import { Button } from './component';
 
-import { addList } from './actions/listActions';
 class Main extends Component {
-    onAddList = (teks) => {
-        const { dispatch } = this.props;
-
-        dispatch(addList(teks))
+    onButtonPress(){
+        Actions.add();        
     }
 
     render() {
-        const { containerStyle, styleWrapButton, styleButton, styleText } = styles;
+       const { containerStyle, styleWrapButton, styleButton, styleText } = styles;
         return (
             <View style={containerStyle}>
                 <View style={styleWrapButton}>
@@ -19,7 +17,7 @@ class Main extends Component {
                     <Button
                     styleButton={styleButton}
                     styleText={styleText}
-                    onPress={this.onAddList}
+                    onPress={this.onButtonPress.bind(this)}
                     >
                     +
                     </Button>

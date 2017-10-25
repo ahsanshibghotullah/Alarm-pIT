@@ -8,8 +8,7 @@ const RouterComponent = () => {
         <Router>
             <Scene hideNavBar>
                 <Scene key="main" component={Main} title="Alarm" initial />
-                <Scene key="add" component={AddForm} title="Add Alarm" />
-                
+                <Scene key="add" component={AddForm} title="tambah alarm" />
             </Scene>
         </Router>
     );

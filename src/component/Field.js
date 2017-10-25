@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TextInput } from 'reeact-native';
+import { View, Text, TextInput } from 'react-native';
 
 
 const Field = ({ 

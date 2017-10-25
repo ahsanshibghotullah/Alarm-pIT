@@ -7,7 +7,7 @@ class AddForm extends Component {
     onButtonPress() {
 
     }
-
+    
     render() {
         const { container } = styles;
         return (
@@ -16,11 +16,7 @@ class AddForm extends Component {
                 label="Label"
                 placeholder="..."
                 autoCorrect={true}
-                value={}
-                onChangeText={}
-                styleContainer={}
-                styleLabel={}
-                styleTextInput={}
+                onChangeText={this.onButtonPress.bind(this)}
                 />
                 {/* tombol buat nambahin list */}
                 <Button
