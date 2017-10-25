@@ -1,19 +1,16 @@
 import React, { Component } from 'react';
-import { View,  Picker } from 'react-native';
-import { connect } from 'react-redux';
+import { View, Picker } from 'react-native';
 import { Field, Button } from './component';
-import { listAdd, listCreate } from './actions';
 
 class AddForm extends Component {
     state = {
+        text: '',
         date: '',
         date2: ''
     }
 
     onButtonPress() {
-        const { label } = this.props;
 
-        this.props.listCreate();
     }
     
     render() {
@@ -25,8 +22,8 @@ class AddForm extends Component {
                     label="Label"
                     placeholder="..."
                     autoCorrect={true}
-                    onChangeText={value => this.props.listAdd({ prop: 'label', value })}
-                    value={this.props.label}
+                    onChangeText={text => this.setState({ text })}
+                    value={this.state.text}
                     />
                 </View>
 
@@ -67,7 +64,6 @@ class AddForm extends Component {
 const styles = {
     container: {
         flex: 1,
-        // flexDirection: 'space-around',
         justifyContent: 'center',
         alignItems: 'center',
     },
@@ -91,10 +87,4 @@ const styles = {
     },
 };
 
-const mapStateToProps = (state) => {
-    const { label } = state.addForm;
-
-    return { label };  
-}
-
-export default connect(mapStateToProps, { listAdd, listCreate })(AddForm);
+export default AddForm;
