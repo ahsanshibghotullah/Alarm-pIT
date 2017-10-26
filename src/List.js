@@ -7,7 +7,13 @@ const List = ({ rowData }) => {
     return (
         <View style={story}>
             <Text style={storyText}>
-                {rowData}
+                {rowData.text}
+            </Text>
+            <Text style={storyText}>
+                {rowData.hour}
+            </Text>
+            <Text style={storyText}>
+                {rowData.minute}
             </Text>
         </View>
     );
@@ -20,7 +26,7 @@ const styles = {
         padding: 20,
         borderBottomWidth: 2,
         borderBottomColor: 'black',
-        flexDirection: 'column',
+        flexDirection: 'row',
     },
     storyText: {
         paddingLeft: 20,

@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React, { Component } from 'react';
 import { View, AsyncStorage, ListView } from 'react-native';
 import { Button } from './component';
@@ -77,8 +78,11 @@ class Main extends Component {
     }
 
     render() {
-        const dataSource = this.state.ds.cloneWithRows(this.state.listOfTasks);
-       const { containerStyle, styleWrapButton, styleButton, styleText } = styles;
+        const listData = _.map(this.state.listOfTasks, (val) => {
+            return { ...val };
+        });
+        const dataSource = this.state.ds.cloneWithRows(listData);
+        const { containerStyle, styleWrapButton, styleButton, styleText } = styles;
 
         return (
             <View style={containerStyle}>
