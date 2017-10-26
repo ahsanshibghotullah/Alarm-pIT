@@ -7,13 +7,7 @@ const List = ({ rowData }) => {
     return (
         <View style={story}>
             <Text style={storyText}>
-                {rowData.text}
-            </Text>
-            <Text style={storyText}>
-                {rowData.hour}
-            </Text>
-            <Text style={storyText}>
-                {rowData.minute}
+                {rowData}
             </Text>
         </View>
     );

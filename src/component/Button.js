@@ -1,17 +1,17 @@
 import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { Text, TouchableOpacity } from 'react-native';
 
 const Button = ({ onPress, children, styleButton, styleText }) => {
     const { buttonStyle, textStyle } = styles;
     return (
         <TouchableOpacity
         onPress={onPress}
-        style={[ buttonStyle, styleButton ]}
+        style={[buttonStyle, styleButton]}
         >
-            <Text style={[ textStyle, styleText ]}>{children}</Text>
+            <Text style={[textStyle, styleText]}>{children}</Text>
         </TouchableOpacity>
-    )
-}
+    );
+};
 
 const styles = {
     buttonStyle: {
@@ -22,7 +22,6 @@ const styles = {
     textStyle: {
         fontSize: 18,
     }
-
-}
+};
 
 export { Button };

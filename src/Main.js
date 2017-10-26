@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, AsyncStorage, Text, ListView } from 'react-native';
+import { View, AsyncStorage, ListView } from 'react-native';
 import { Button } from './component';
 import AddForm from './AddForm';
 import List from './List';
@@ -8,19 +8,21 @@ class Main extends Component {
     constructor(props) {
         super(props);
     
-        const ds = new ListView.DataSource({
-          rowHasChanged: (r1, r2) => r1 !== r2
-        });
+        // const ds = new ListView.DataSource({
+        //   rowHasChanged: (r1, r2) => r1 !== r2
+        // });
     
         this.state = {
           ds: new ListView.DataSource({
             rowHasChanged: (r1, r2) => r1 !== r2
           }),
           listOfTasks: [],
-          text: '',
           showModal: false,
-          hour: 1,
-          minute: 1,
+          id: {
+            text: '',
+            hour: 1,
+            minute: 1,
+          }
         };
       }
 
@@ -34,7 +36,8 @@ class Main extends Component {
     }
 
     async onAddTask() {
-        const listOfTasks = [...this.state.listOfTasks, this.state.text, this.state.hour, this.state.minute];
+        const listOfTasks = [...this.state.listOfTasks, 
+            this.state.id];
     
         await AsyncStorage.setItem('listOfTasks', JSON.stringify(listOfTasks));
     
@@ -42,7 +45,7 @@ class Main extends Component {
     }
 
     async onDeleteList() {      
-        await AsyncStorage.removeItem('listOfTasks', JSON.stringify(this.state.listOfTasks));
+        await AsyncStorage.removeItem('listOfTasks');
     
         this.onUpdateList(); 
     }
@@ -50,7 +53,8 @@ class Main extends Component {
     async onUpdateList() {
         const response = await AsyncStorage.getItem('listOfTasks');
         const listOfTasks = await JSON.parse(response) || [];
-    
+        console.log(listOfTasks);
+
         this.setState({
           listOfTasks
         });
@@ -60,7 +64,9 @@ class Main extends Component {
 
     onChangeTextInputValue(text) {
         this.setState({
-          text
+          id: Object.assign({}, this.state.id, {
+            text,
+          }),
         });
     }
 
@@ -76,13 +82,14 @@ class Main extends Component {
 
         return (
             <View style={containerStyle}>
+                <ListView
+                dataSource={dataSource}
+                enableEmptySections
+                renderRow={rowData => this.renderRowData(rowData)}
+                />
+
                 <View style={styleWrapButton}>
                     {/* tombol buat pindah ke Add Form */}
-                    <ListView
-                    dataSource={dataSource}
-                    enableEmptySections
-                    renderRow={rowData => this.renderRowData(rowData)}
-                    />
                     <Button
                     styleButton={styleButton}
                     styleText={styleText}
@@ -91,7 +98,7 @@ class Main extends Component {
                     +
                     </Button>
                     <Button
-                    styleButton={styleButton}
+                    styleButton={[styleButton, styles.paddingButton]}
                     styleText={styleText}
                     onPress={() => this.onDeleteList()}
                     >
@@ -101,11 +108,13 @@ class Main extends Component {
                     visible={this.state.showModal}
                     onPress={this.onAddPress.bind(this)}
                     onChangeText={text => this.onChangeTextInputValue(text)}
-                    value={this.state.text}
-                    onValueChangeHour={hour => this.setState({ hour })}
-                    selectedValueHour={this.state.hour}
-                    onValueChangeMinute={minute => this.setState({ minute })}
-                    selectedValueMinute={this.state.minute}
+                    value={this.state.id.text}
+                    onValueChangeHour={hour => 
+                    this.setState({ id: Object.assign({}, this.state.id, { hour, }), })}
+                    selectedValueHour={this.state.id.hour}
+                    onValueChangeMinute={minute => 
+                    this.setState({ id: Object.assign({}, this.state.id, { minute, }), })}
+                    selectedValueMinute={this.state.id.minute}
                     />
                 </View>
             </View>
@@ -116,7 +125,7 @@ class Main extends Component {
 const styles = {
     containerStyle: {
         flex: 1,
-        flexDirection: 'column'
+        flexDirection: 'column',
     },
     styleWrapButton: {
         justifyContent: 'flex-end',
@@ -124,6 +133,7 @@ const styles = {
         marginRight: 20,
         marginBottom: 50,
         flex: 1,
+        position: 'absolute',
     },
     styleButton: {
         borderColor: 'black',
@@ -131,7 +141,10 @@ const styles = {
         width: 80,
         height: 80,
         borderWidth: 1,
-        backgroundColor: 'black'
+        backgroundColor: 'black',
+    },
+    paddingButton: {
+        
     },
     styleText: {
         color: 'white',
