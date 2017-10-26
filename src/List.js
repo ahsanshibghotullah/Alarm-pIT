@@ -1,23 +1,41 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 
-const List = ({ rowData }) => {
-    // const { mystory, date } = this.props.story;
-    const { story, storyText } = styles;
-    return (
-        <View style={story}>
-            <Text style={storyText}>
-                {rowData.text}
-            </Text>
-            <Text style={storyText}>
-                {rowData.hour}
-            </Text>
-            <Text style={storyText}>
-                {rowData.minute}
-            </Text>
-        </View>
-    );
-};
+class List extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            text: '',
+            hour: '',
+            minute: '',
+        };
+    }
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+          text: nextProps.rowData.text,
+          hour: nextProps.rowData.hour,
+          minute: nextProps.rowData.minute,
+        });
+    }
+
+    render() {
+        // const { text, hour, minute } = this.props.rowData;
+        const { story, storyText } = styles;
+        return (
+            <View style={story}>
+                <Text style={storyText}>
+                    {this.state.text}
+                </Text>
+                <Text style={storyText}>
+                    {this.state.hour}
+                </Text>
+                <Text style={storyText}>
+                    {this.state.minute}
+                </Text>
+            </View>
+        );
+    }
+}
 
 const styles = {
     story: {
