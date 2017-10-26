@@ -18,7 +18,9 @@ class Main extends Component {
           }),
           listOfTasks: [],
           text: '',
-          showModal: false
+          showModal: false,
+          hour: 1,
+          minute: 1,
         };
       }
 
@@ -32,11 +34,17 @@ class Main extends Component {
     }
 
     async onAddTask() {
-        const listOfTasks = [...this.state.listOfTasks, this.state.text];
+        const listOfTasks = [...this.state.listOfTasks, this.state.text, this.state.hour, this.state.minute];
     
         await AsyncStorage.setItem('listOfTasks', JSON.stringify(listOfTasks));
     
         this.onUpdateList();
+    }
+
+    async onDeleteList() {      
+        await AsyncStorage.removeItem('listOfTasks', JSON.stringify(this.state.listOfTasks));
+    
+        this.onUpdateList(); 
     }
 
     async onUpdateList() {
@@ -82,11 +90,22 @@ class Main extends Component {
                     >
                     +
                     </Button>
+                    <Button
+                    styleButton={styleButton}
+                    styleText={styleText}
+                    onPress={() => this.onDeleteList()}
+                    >
+                    -
+                    </Button>
                     <AddForm 
                     visible={this.state.showModal}
                     onPress={this.onAddPress.bind(this)}
                     onChangeText={text => this.onChangeTextInputValue(text)}
                     value={this.state.text}
+                    onValueChangeHour={hour => this.setState({ hour })}
+                    selectedValueHour={this.state.hour}
+                    onValueChangeMinute={minute => this.setState({ minute })}
+                    selectedValueMinute={this.state.minute}
                     />
                 </View>
             </View>
