@@ -1,12 +1,12 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 
-const List = () => {
+const List = ({ rowData }) => {
     const { story, storyText } = styles;
     return (
         <View style={story}>
             <Text style={storyText}>
-                List
+                {rowData}
             </Text>
         </View>
     );
@@ -14,6 +14,7 @@ const List = () => {
 
 const styles = {
     story: {
+        flex: 1,
         position: 'relative',
         padding: 20,
         paddingRight: 100,

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, AsyncStorage, Text, ListView } from 'react-native';
 import { Button } from './component';
 import AddForm from './AddForm';
+import List from './List';
 
 class Main extends Component {
     constructor(props) {
@@ -57,7 +58,7 @@ class Main extends Component {
 
     renderRowData(rowData) {
         return (
-          <Text>{ rowData }</Text>
+          <List rowData={rowData} />
         );
     }
 
