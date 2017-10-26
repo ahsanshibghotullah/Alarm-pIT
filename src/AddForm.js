@@ -6,7 +6,7 @@ const AddForm = ({
     visible, value, onChangeText, onPress, 
     selectedValueHour, onValueChangeHour, selectedValueMinute, onValueChangeMinute
                 }) => {
-    const { container, background, styleButton, pickerStyle, wrapPicker } = styles;
+    const { container, wrapField, background, styleButton, pickerStyle, wrapPicker } = styles;
     return (
         <Modal
         visible={visible}
@@ -16,7 +16,7 @@ const AddForm = ({
         >
             <View style={container}>
                 <View style={background}>
-                    <View>
+                    <View style={wrapField}>
                         <Field 
                         label="Label"
                         placeholder="..."
@@ -71,7 +71,13 @@ const styles = {
         alignItems: 'center',
     },
     background: {
-        backgroundColor: 'white'
+        backgroundColor: 'white',
+        padding: 10,
+        borderRadius: 5,
+
+    },
+    wrapField: {
+        margin: 10
     },
     wrapTextInput: {
        borderWidth: 1,
@@ -82,10 +88,12 @@ const styles = {
         alignItems: 'center',
         height: 30,
         width: 100,
-        margin: 10
+        margin: 10,
+        marginLeft: 35,
     },
     wrapPicker: {
         flexDirection: 'row',
+        margin: 10
     },
     pickerStyle: {
         width: 80,
