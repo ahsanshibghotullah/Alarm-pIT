@@ -1,21 +1,45 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, AppState } from 'react-native';
+import PushNotification from 'react-native-push-notification';
+import PushController from './PushController';
 
 class List extends Component {
     constructor(props) {
         super(props);
+        this.handleAppStateChange = this.handleAppStateChange.bind(this);
         this.state = {
             text: '',
             hour: '',
             minute: '',
         };
     }
+
+    componentDidMount() {
+    AppState.addEventListener('change', this.handleAppStateChange);
+    }
+    
     componentWillReceiveProps(nextProps) {
         this.setState({
-          text: nextProps.rowData.text,
-          hour: nextProps.rowData.hour,
-          minute: nextProps.rowData.minute,
+            text: nextProps.rowData.text,
+            hour: nextProps.rowData.hour,
+            minute: nextProps.rowData.minute,
         });
+    }
+
+    componentWillUnmount() {
+        AppState.removeEventListener('change', this.handleAppStateChange);
+    }
+    
+    handleAppStateChange(appState) {
+        const alarm = this.state.hour
+    if (appState === 'background') {
+        PushNotification.localNotificationSchedule({
+        message: "Bangun coy!", // (required)
+        date: new Date(Date.now() + (this.state.seconds * 1000)), // in 60 secs
+        // playSound: true,
+        // soundName: 'doraemon.mp3',
+        });
+    }
     }
 
     render() {
@@ -32,6 +56,7 @@ class List extends Component {
                 <Text style={storyText}>
                     {this.state.minute}
                 </Text>
+                <PushController />
             </View>
         );
     }
