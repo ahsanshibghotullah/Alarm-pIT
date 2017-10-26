@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
 import { Button } from './component';
+import AddForm from './AddForm';
 
 class Main extends Component {
     state ={
         showModal: false
     }
-    
-    onButtonPress() {
-     
+
+    onAddPress() {
+        this.setState({ showModal: false })
     }
 
     render() {
@@ -20,10 +21,14 @@ class Main extends Component {
                     <Button
                     styleButton={styleButton}
                     styleText={styleText}
-                    onPress={this.onButtonPress.bind(this)}
+                    onPress={() => this.setState({ showModal: true })}
                     >
                     +
                     </Button>
+                    <AddForm 
+                    visible={this.state.showModal}
+                    onPress={this.onAddPress.bind(this)}
+                    />
                 </View>
             </View>
         );
