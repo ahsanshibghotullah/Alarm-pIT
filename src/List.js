@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { View, Text, AppState } from 'react-native';
+import { View, Text } from 'react-native';
 import PushNotification from 'react-native-push-notification';
-import PushController from './PushController';
 
 class List extends Component {
     constructor(props) {
@@ -14,7 +13,6 @@ class List extends Component {
 
         const d = new Date();
         const date = (d.getHours() * 60) + (d.getMinutes());
-        this.handleAppStateChange = this.handleAppStateChange.bind(this);
         this.state = {
             text: 'a',
             hour: 0,
@@ -22,47 +20,31 @@ class List extends Component {
             date,
         };
     }
-
-    componentDidMount() {
-        AppState.addEventListener('change', this.handleAppStateChange);
-        // PushNotification.configure({            
-        //     onNotification: function (notification) {
-        //         console.log('NOTIFICATION:', notification);
-        //     }
-        // });
-    }
     
     componentWillReceiveProps(nextProps) {
-        this.setState({
-            text: nextProps.rowData.text,
-            hour: nextProps.rowData.hour,
-            minute: nextProps.rowData.minute,
-        });
+        const text = nextProps.rowData.text;
+        const hour = nextProps.rowData.hour;
+        const minute = nextProps.rowData.minute;
+        const hours = Number(hour);
+        const minutes = Number(minute);
+
+        this.setState({ text, hour, minute, });
+        this.handleNotification(hours, minutes);
     }
 
-    componentWillUnmount() {
-        AppState.removeEventListener('change', this.handleAppStateChange);
-    }
-    
-    handleAppStateChange(appState) {
-        const schedule = (this.state.hour * 60) + this.state.minute;
+    handleNotification(hour, minute) {
+        const schedule = (hour * 60) + minute;
         const alarm = schedule - this.state.date;
-        if (appState === 'background') {
             PushNotification.localNotificationSchedule({
             message: "Bangun coy!", // (required)
             date: new Date(Date.now() + (alarm * 60000)) // in minute
-            // playSound: true,
-            // soundName: 'doraemon.mp3',
             });
+            console.log(schedule);
+            console.log(this.state.date);
             console.log(alarm);
-        }
     }
-    // Math.abs(alarm)
+
     render() {
-        // const { text, hour, minute } = this.props.rowData;
-        const schedule = (this.state.hour * 60) + this.state.minute;
-        const alarm = schedule - this.state.date;
-        console.log(alarm);
         const { story, storyText } = styles;
         return (
             <View style={story}>

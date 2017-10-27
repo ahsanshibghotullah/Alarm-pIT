@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
-import { View, AsyncStorage, ListView } from 'react-native';
+import { View, AsyncStorage, ListView, Text } from 'react-native';
 import { Button } from './component';
 import AddForm from './AddForm';
 import List from './List';
@@ -8,11 +8,9 @@ import List from './List';
 class Main extends Component {
     constructor(props) {
         super(props);
-    
-        // const ds = new ListView.DataSource({
-        //   rowHasChanged: (r1, r2) => r1 !== r2
-        // });
-    
+
+        const d = new Date();
+        const date = (d.getHours() * 60) + (d.getMinutes());
         this.state = {
           ds: new ListView.DataSource({
             rowHasChanged: (r1, r2) => r1 !== r2
@@ -21,9 +19,11 @@ class Main extends Component {
           showModal: false,
           id: {
             text: '',
-            hour: 1,
+            hour: 0,
             minute: 1,
-          }
+            date,
+          },
+          isReady: false,
         };
       }
 
@@ -54,10 +54,11 @@ class Main extends Component {
     async onUpdateList() {
         const response = await AsyncStorage.getItem('listOfTasks');
         const listOfTasks = await JSON.parse(response) || [];
+        // console.log
         console.log(listOfTasks);
 
         this.setState({
-          listOfTasks
+          listOfTasks, isReady: true
         });
     
         this.onChangeTextInputValue('');
@@ -78,50 +79,60 @@ class Main extends Component {
     }
 
     render() {
-        const listData = _.map(this.state.listOfTasks, (val) => {
-            return { ...val };
-        });
+        const listData = _.map(this.state.listOfTasks, (val) => { return { ...val }; });
         const dataSource = this.state.ds.cloneWithRows(listData);
         const { containerStyle, styleWrapButton, styleButton, styleText } = styles;
+        const { isReady } = this.state;
+        console.log(listData[2]);
+        if (isReady) {
+            return (
+                <View style={containerStyle}>
+                    <View style={{ flex: 1 }}>
+                        <ListView
+                        dataSource={dataSource}
+                        enableEmptySections
+                        renderRow={rowData => this.renderRowData(rowData)}
+                        />
+                        <AddForm 
+                        visible={this.state.showModal}
+                        onPress={this.onAddPress.bind(this)}
+                        onChangeText={text => this.onChangeTextInputValue(text)}
+                        value={this.state.id.text}
+                        onValueChangeHour={hour => 
+                        this.setState({ id: Object.assign({}, this.state.id, { hour, }), })}
+                        selectedValueHour={this.state.id.hour}
+                        onValueChangeMinute={minute => 
+                        this.setState({ id: Object.assign({}, this.state.id, { minute, }), })}
+                        selectedValueMinute={this.state.id.minute}
+                        />
+                    </View>
 
-        return (
-            <View style={containerStyle}>
-                <ListView
-                dataSource={dataSource}
-                enableEmptySections
-                renderRow={rowData => this.renderRowData(rowData)}
-                />
-
-                <View style={styleWrapButton}>
-                    {/* tombol buat pindah ke Add Form */}
-                    <Button
-                    styleButton={styleButton}
-                    styleText={styleText}
-                    onPress={() => this.setState({ showModal: true })}
-                    >
-                    +
-                    </Button>
-                    <Button
-                    styleButton={[styleButton, styles.paddingButton]}
-                    styleText={styleText}
-                    onPress={() => this.onDeleteList()}
-                    >
-                    -
-                    </Button>
-                    <AddForm 
-                    visible={this.state.showModal}
-                    onPress={this.onAddPress.bind(this)}
-                    onChangeText={text => this.onChangeTextInputValue(text)}
-                    value={this.state.id.text}
-                    onValueChangeHour={hour => 
-                    this.setState({ id: Object.assign({}, this.state.id, { hour, }), })}
-                    selectedValueHour={this.state.id.hour}
-                    onValueChangeMinute={minute => 
-                    this.setState({ id: Object.assign({}, this.state.id, { minute, }), })}
-                    selectedValueMinute={this.state.id.minute}
-                    />
+                    <View style={styleWrapButton}>
+                        {/* tombol buat pindah ke Add Form */}
+                        <Button
+                        styleButton={styleButton}
+                        styleText={styleText}
+                        onPress={() => this.setState({ showModal: true })}
+                        >
+                        +
+                        </Button>
+                        <Button
+                        styleButton={[styleButton, styles.paddingButton]}
+                        styleText={styleText}
+                        onPress={() => this.onDeleteList()}
+                        >
+                        -
+                        </Button>
+                        {/* 
+                        // Akses id[0].text
+                        <Text>{this.state.listOfTasks[0].text}</Text> 
+                        */}
+                    </View>
                 </View>
-            </View>
+            );
+        }
+        return (
+            <Text>belon</Text>
         );
     }
 }
