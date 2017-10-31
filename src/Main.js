@@ -31,36 +31,31 @@ class Main extends Component {
         this.onUpdateList();
     }
 
-    onAddPress() {
-        this.setState({ showModal: false });
-        this.onAddTask();
-    }
-
     async onAddTask() {
+        // const key = this.state.id.text;
         const listOfTasks = [...this.state.listOfTasks, 
             this.state.id];
-    
+        if (this.state.id.text !== '') {
         await AsyncStorage.setItem('listOfTasks', JSON.stringify(listOfTasks));
-    
+        this.setState({ showModal: false });
         this.onUpdateList();
+        }
+        this.setState({ showModal: false });
     }
 
     async onDeleteList() {      
         await AsyncStorage.removeItem('listOfTasks');
-    
         this.onUpdateList(); 
     }
 
     async onUpdateList() {
         const response = await AsyncStorage.getItem('listOfTasks');
         const listOfTasks = await JSON.parse(response) || [];
-        // console.log
         console.log(listOfTasks);
-
+        
         this.setState({
           listOfTasks, isReady: true
         });
-    
         this.onChangeTextInputValue('');
       }
 
@@ -79,11 +74,10 @@ class Main extends Component {
     }
 
     render() {
-        const listData = _.map(this.state.listOfTasks, (val) => { return { ...val }; });
+        const listData = _.map(this.state.listOfTasks, (val, uid) => { return { ...val, uid }; });
         const dataSource = this.state.ds.cloneWithRows(listData);
         const { containerStyle, styleWrapButton, styleButton, styleText } = styles;
         const { isReady } = this.state;
-        console.log(listData[2]);
         if (isReady) {
             return (
                 <View style={containerStyle}>
@@ -95,7 +89,7 @@ class Main extends Component {
                         />
                         <AddForm 
                         visible={this.state.showModal}
-                        onPress={this.onAddPress.bind(this)}
+                        onPress={this.onAddTask.bind(this)}
                         onChangeText={text => this.onChangeTextInputValue(text)}
                         value={this.state.id.text}
                         onValueChangeHour={hour => 
@@ -105,28 +99,28 @@ class Main extends Component {
                         this.setState({ id: Object.assign({}, this.state.id, { minute, }), })}
                         selectedValueMinute={this.state.id.minute}
                         />
-                    </View>
 
-                    <View style={styleWrapButton}>
-                        {/* tombol buat pindah ke Add Form */}
-                        <Button
-                        styleButton={styleButton}
-                        styleText={styleText}
-                        onPress={() => this.setState({ showModal: true })}
-                        >
-                        +
-                        </Button>
-                        <Button
-                        styleButton={[styleButton, styles.paddingButton]}
-                        styleText={styleText}
-                        onPress={() => this.onDeleteList()}
-                        >
-                        -
-                        </Button>
-                        {/* 
-                        // Akses id[0].text
-                        <Text>{this.state.listOfTasks[0].text}</Text> 
-                        */}
+                        <View style={styleWrapButton}>
+                            {/* tombol buat pindah ke Add Form */}
+                            <Button
+                            styleButton={styleButton}
+                            styleText={styleText}
+                            onPress={() => this.setState({ showModal: true })}
+                            >
+                            +
+                            </Button>
+                            <Button
+                            styleButton={[styleButton, styles.paddingButton]}
+                            styleText={styleText}
+                            onPress={() => this.onDeleteList()}
+                            >
+                            -
+                            </Button>
+                            {/* 
+                            // Akses id[0].text
+                            <Text>{this.state.listOfTasks[0].text}</Text> 
+                            */}
+                        </View>
                     </View>
                 </View>
             );
@@ -143,18 +137,18 @@ const styles = {
         flexDirection: 'column',
     },
     styleWrapButton: {
-        justifyContent: 'flex-end',
-        alignItems: 'flex-end',
         marginRight: 20,
         marginBottom: 50,
-        flex: 1,
         position: 'absolute',
+        flexDirection: 'row',
+        bottom: 0,
+        right: 0,
     },
     styleButton: {
         borderColor: 'black',
         borderRadius: 40,
-        width: 80,
-        height: 80,
+        width: 50,
+        height: 50,
         borderWidth: 1,
         backgroundColor: 'black',
     },
@@ -163,7 +157,8 @@ const styles = {
     },
     styleText: {
         color: 'white',
-        fontSize: 20,
+        fontSize: 30,
+        fontWeight: 'bold',
     },
 };
 
