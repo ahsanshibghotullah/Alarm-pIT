@@ -25,8 +25,8 @@ class List extends Component {
         const text = nextProps.rowData.text;
         const hour = nextProps.rowData.hour;
         const minute = nextProps.rowData.minute;
-        const hours = Number(hour);
-        const minutes = Number(minute);
+        // const hours = Number(hour);
+        // const minutes = Number(minute);
         console.log(nextProps.rowData);
 
         this.setState({ text, hour, minute, });
