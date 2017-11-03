@@ -1,57 +1,34 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Provider } from 'react-redux';
-import { Text, AppState, AsyncStorage } from 'react-native';
-import { createStore } from 'redux';
+import { Text } from 'react-native';
+import { PersistGate } from 'redux-persist/es/integration/react';
+import { configureStore } from './src/stores/configureStore';
 import Main from './src/Main';
-import reducers from './src/reducers';
 
-const store = createStore(reducers);
+const { persistor, store } = configureStore();
 
-class App extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            isSoteLodaing: false,
-            store,
-        };
-    }
+const onBeforeLift = () => {
+    // take some action before the gate lifts
+};
 
-    componentWillMount() {
-        AppState.addEventListener('change', this.handleAppStateChange.bind(this));
-        this.setState({ isSoteLodaing: true });
-        AsyncStorage.getItem('completeStore').then(value => {
-            if (value && value.length) {
-                const initialStore = JSON.parse(value);
-                this.setState({ store: createStore(reducers, initialStore) });
-            } else {
-                this.setState({ store });
-            }
-            this.setState({ isSoteLodaing: false });
-        }).catch((error) => {
-            this.setState({ isSoteLodaing: false, store });
-        });
-    }
+const Loading = () => {
+    return (
+        <Text>Loading page..</Text>
+    );
+};
 
-    componentWillUnmount() {
-        AppState.removeEventListener('change', this.handleAppStateChange.bind(this));
-    }
-
-    handleAppStateChange(currentAppState) {
-        const storingValue = JSON.stringify(this.state.store.getState())
-        AsyncStorage.setItem('completeStore', storingValue);
-      }
-
-    render() {
-        const load = this.state.isSoteLodaing;
-        if (load) {
-            return <Text>Loading Store..</Text>;
-        }
-        return (
-            <Provider store={store}>
-                <Main />    
-            </Provider>
-        );
-    }
-}
+const App = () => {
+    return (
+        <Provider store={store}>
+            <PersistGate
+            loading={Loading}
+            onBeforeLift={onBeforeLift}
+            persistor={persistor}
+            >
+                <Main /> 
+            </PersistGate>   
+        </Provider>
+    );
+};
 
 export default App;

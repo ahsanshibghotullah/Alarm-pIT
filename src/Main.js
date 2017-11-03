@@ -129,8 +129,8 @@ const mapStateToProps = state => {
     // const minute = _.map(state.Main.id.minute, (val, uid) => {
     //     return { ...val, uid };
     // });
-    const { text, minute, hour, } = state.Main.id;
-    const { listOfTasks } = state.Main;
+    const { text, minute, hour, } = state.MainR;
+    const { listOfTasks } = state.MainR;
     return { text, minute, hour, listOfTasks };
 };
 
