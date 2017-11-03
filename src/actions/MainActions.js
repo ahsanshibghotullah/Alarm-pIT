@@ -7,8 +7,9 @@ export const updateAlarm = ({ prop, value }) => {
     };
 };
 
-export const addList = () => {
+export const addList = ({ text, hour, minute }) => {
     return {
-        type: ADD_LIST
+        type: ADD_LIST,
+        payload: { text, hour, minute }
     };
 };

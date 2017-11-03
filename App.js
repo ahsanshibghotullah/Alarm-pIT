@@ -37,9 +37,9 @@ class App extends Component {
     }
 
     handleAppStateChange(currentAppState) {
-        const storingValue = JSON.stringfy(this.state.store.getState());
+        const storingValue = JSON.stringify(this.state.store.getState())
         AsyncStorage.setItem('completeStore', storingValue);
-    }
+      }
 
     render() {
         const load = this.state.isSoteLodaing;

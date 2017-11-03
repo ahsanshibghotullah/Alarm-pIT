@@ -21,67 +21,22 @@ class Main extends Component {
         };
       }
 
-    //   componentWillMount() {
-    //     this.props.storyFetch();
-    //     this.createDataSource(this.props);
-    // }
-
-    // componentWillReceiveProps(nextProps) {
-    //     this.createDataSource(nextProps);
-    // }
-
     onAddTask() {
-        // const key = this.state.id.text;
-        // const listOfTasks = [...this.state.listOfTasks, 
-        //     this.state.id];
-        if (this.state.id.text !== '') {
-        // await AsyncStorage.setItem('listOfTasks', JSON.stringify(listOfTasks));
+        const text = this.props.text;
+        const hour = this.props.hour;
+        const minute = this.props.minute;
+        if (text !== '') {
         this.setState({ showModal: false });
-        // this.onUpdateList();
-            this.props.addList();
+            this.props.addList({ text, hour, minute });
         }
         this.setState({ showModal: false });
     }
-
-    // createDataSource({ storys }) {
-    //     const ds = new ListView.DataSource({
-    //         rowHasChanged: (r1, r2) => r1 !== r2
-    //     });
-    //     this.dataSource = ds.cloneWithRows(storys);
-    // }
 
     renderRowData(rowData) {
         return (
           <List rowData={rowData} />
         );
     }
-    // componentDidMount() {
-    //     this.onUpdateList();
-    // }
-
-    // async onDeleteList() {      
-    //     await AsyncStorage.removeItem('listOfTasks');
-    //     this.onUpdateList(); 
-    // }
-
-    // async onUpdateList() {
-    //     const response = await AsyncStorage.getItem('listOfTasks');
-    //     const listOfTasks = await JSON.parse(response) || [];
-    //     console.log(listOfTasks);
-        
-    //     this.setState({
-    //       listOfTasks, isReady: true
-    //     });
-    //     this.onChangeTextInputValue('');
-    //   }
-
-    // onChangeTextInputValue(text) {
-    //     this.setState({
-    //       id: Object.assign({}, this.state.id, {
-    //         text,
-    //       }),
-    //     });
-    // }
 
     render() {
         const listData = _.map(this.props.listOfTasks, (val, uid) => { return { ...val, uid }; });
@@ -114,9 +69,7 @@ class Main extends Component {
                         styleButton={styleButton}
                         styleText={styleText}
                         onPress={() => this.setState({ showModal: true })}
-                        >
-                        +
-                        </Button>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
+                        > + </Button>
                         <Button
                         styleButton={[styleButton, styles.paddingButton]}
                         styleText={styleText}
@@ -167,6 +120,15 @@ const styles = {
 };
 
 const mapStateToProps = state => {
+    // const text = _.map(state.Main.id.text, (val, uid) => {
+    //     return { ...val, uid };
+    // });
+    // const hour = _.map(state.Main.id.hour, (val, uid) => {
+    //     return { ...val, uid };
+    // });
+    // const minute = _.map(state.Main.id.minute, (val, uid) => {
+    //     return { ...val, uid };
+    // });
     const { text, minute, hour, } = state.Main.id;
     const { listOfTasks } = state.Main;
     return { text, minute, hour, listOfTasks };
