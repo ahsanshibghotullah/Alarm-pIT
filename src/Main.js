@@ -143,18 +143,18 @@ const styles = {
         flexDirection: 'column',
     },
     styleWrapButton: {
-        justifyContent: 'flex-end',
-        alignItems: 'flex-end',
         marginRight: 20,
         marginBottom: 50,
-        flex: 1,
         position: 'absolute',
+        flexDirection: 'row',
+        bottom: 0,
+        right: 0,
     },
     styleButton: {
         borderColor: 'black',
         borderRadius: 40,
-        width: 80,
-        height: 80,
+        width: 50,
+        height: 50,
         borderWidth: 1,
         backgroundColor: 'black',
     },
@@ -163,7 +163,8 @@ const styles = {
     },
     styleText: {
         color: 'white',
-        fontSize: 20,
+        fontSize: 30,
+        fontWeight: 'bold',
     },
 };
 

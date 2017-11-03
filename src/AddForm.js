@@ -7,6 +7,13 @@ const AddForm = ({
     selectedValueHour, onValueChangeHour, selectedValueMinute, onValueChangeMinute
                 }) => {
     const { container, wrapField, background, styleButton, pickerStyle, wrapPicker } = styles;
+    const loopHour = ['00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', 
+                '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23'];
+    const loopMinute = ['00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', 
+                '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', 
+                '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', 
+                '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', 
+                '48', '49', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59'];
     return (
         <Modal
         visible={visible}
@@ -32,55 +39,16 @@ const AddForm = ({
                         onValueChange={onValueChangeHour}
                         style={pickerStyle}
                         >
-                            <Picker.Item label="0" value="0" />
-                            <Picker.Item label="1" value="1" />
-                            <Picker.Item label="2" value="2" />
-                            <Picker.Item label="3" value="3" />
-                            <Picker.Item label="4" value="4" />
-                            <Picker.Item label="5" value="5" />
-                            <Picker.Item label="6" value="6" />
-                            <Picker.Item label="7" value="7" />
-                            <Picker.Item label="8" value="8" />
-                            <Picker.Item label="9" value="9" />
-                            <Picker.Item label="10" value="10" />
-                            <Picker.Item label="11" value="11" />
-                            <Picker.Item label="12" value="12" />
-                            <Picker.Item label="13" value="13" />
-                            <Picker.Item label="14" value="14" />
-                            <Picker.Item label="15" value="15" />
-                            <Picker.Item label="16" value="16" />
-                            <Picker.Item label="17" value="17" />
-                            <Picker.Item label="18" value="18" />
-                            <Picker.Item label="19" value="19" />
-                            <Picker.Item label="20" value="20" />
-                            <Picker.Item label="21" value="21" />
+                            {loopHour.map((value, i) => 
+                            <Picker.Item key={i} label={value} value={value} />)}
                         </Picker>
                         <Picker
                         selectedValue={selectedValueMinute}
                         onValueChange={onValueChangeMinute}
                         style={pickerStyle}
                         >
-                        <Picker.Item label="0" value="0" />
-                        <Picker.Item label="1" value="1" />
-                        <Picker.Item label="2" value="2" />
-                        <Picker.Item label="3" value="3" />
-                        <Picker.Item label="4" value="4" />
-                        <Picker.Item label="5" value="5" />
-                        <Picker.Item label="6" value="6" />
-                        <Picker.Item label="7" value="7" />
-                        <Picker.Item label="8" value="8" />
-                        <Picker.Item label="9" value="9" />
-                        <Picker.Item label="10" value="10" />
-                        <Picker.Item label="11" value="11" />
-                        <Picker.Item label="12" value="12" />
-                        <Picker.Item label="13" value="13" />
-                        <Picker.Item label="14" value="14" />
-                        <Picker.Item label="15" value="15" />
-                        <Picker.Item label="16" value="16" />
-                        <Picker.Item label="17" value="17" />
-                        <Picker.Item label="18" value="18" />
-                        <Picker.Item label="19" value="19" />
-                        <Picker.Item label="20" value="20" />
+                            {loopMinute.map((value, i) => 
+                            <Picker.Item key={i} label={value} value={value} />)}
                         </Picker>
                     </View>
                     {/* tombol buat nambahin list */}

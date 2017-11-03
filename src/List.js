@@ -45,17 +45,15 @@ class List extends Component {
     }
 
     render() {
-        const { story, storyText } = styles;
+        const { story, storyText, setTime } = styles;
         return (
             <View style={story}>
                 <Text style={storyText}>
-                    {this.state.text}
-                </Text>
-                <Text style={storyText}>
-                    {this.state.hour}
-                </Text>
-                <Text style={storyText}>
-                    {this.state.minute}
+                    {this.state.text + '  '}
+                    <Text style={setTime}>
+                        {this.state.hour}:
+                        {this.state.minute}
+                    </Text>
                 </Text>
             </View>
         );
@@ -69,13 +67,16 @@ const styles = {
         padding: 20,
         borderBottomWidth: 2,
         borderBottomColor: 'black',
-        flexDirection: 'row',
     },
     storyText: {
         paddingLeft: 20,
         borderLeftWidth: 10,
         borderLeftColor: 'black',
         fontSize: 18,
+        flexDirection: 'column',
+    },
+    setTime: {
+        fontWeight: 'bold',
     },
 };
 
