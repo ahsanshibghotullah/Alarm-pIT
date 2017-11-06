@@ -1,43 +1,74 @@
-import React from 'react';
-import { View, Picker, Modal } from 'react-native';
+import React, { Component } from 'react';
+import { View, Picker } from 'react-native';
+import { connect } from 'react-redux';
+import { Actions } from 'react-native-router-flux';
+import { addList, updateAlarm, emptyAddForm } from './actions';
 import { Field, Button } from './component';
 
-const AddForm = ({ 
-    visible, value, onChangeText, onPress,
-    selectedValueHour, onValueChangeHour, selectedValueMinute, onValueChangeMinute
-                }) => {
-    const { container, wrapField, background, styleButton, pickerStyle, wrapPicker } = styles;
-    const loopHour = ['00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', 
-                '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23'];
-    const loopMinute = ['00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', 
-                '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', 
-                '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', 
-                '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', 
-                '48', '49', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59'];
+// visible, value, onChangeText, onPress,
+// selectedValueHour, onValueChangeHour, selectedValueMinute, onValueChangeMinute
+class AddForm extends Component {
+    state = {
+        text: '',
+        minute: 0,
+        hour: 0,
+    }
 
-    return (
-        <Modal
-        visible={visible}
-        transparent
-        animationType="slide"
-        onRequestClose={() => {}}
-        >
+    componentWillMount() {
+        this.props.emptyAddForm();
+    }
+
+    //Maksimal update 2 makanya pindah ke onButtonPress
+    // componentWillReceiveProps() {
+    //     const text = this.props.text;
+    //     const hour = this.props.hour;
+    //     const minute = this.props.minute;
+    //     this.setState({ text, hour, minute });
+    // }
+
+    onButtonAddPress() {
+        const text = this.state.text;
+        const minute = this.state.minute;
+        const hour = this.state.hour;
+        console.log({ text, hour, minute });
+        // this.props.addList({ text });
+        Actions.main();
+        // this.setState({ text: '', minute: 0, hour: 0 });
+    }
+
+    render() {
+        const { container, wrapField, background, styleButton, pickerStyle, wrapPicker } = styles;
+        const loopHour = ['00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', 
+                    '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23'];
+        const loopMinute = ['00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', 
+                    '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', 
+                    '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', 
+                    '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', 
+                    '48', '49', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59'];
+        console.log(this.props.text, this.props.hour, this.props.minute);
+        return (
             <View style={container}>
                 <View style={background}>
                     <View style={wrapField}>
                         <Field 
                         label="Label"
                         placeholder="..."
-                        autoCorrect={true}
-                        onChangeText={onChangeText}
-                        value={value}
+                        autoCorrect
+                        onChangeText={value => {
+                        this.props.updateAlarm({ prop: 'text', value });
+                        this.setState({ text: value });
+                        }}
+                        value={this.props.text}
                         />
                     </View>
 
                     <View style={wrapPicker}>
                         <Picker
-                        selectedValue={selectedValueHour}
-                        onValueChange={onValueChangeHour}
+                        selectedValue={this.props.hour}
+                        onValueChange={value => {
+                        this.props.updateAlarm({ prop: 'hour', value });
+                        this.setState({ hour: value });
+                        }}
                         style={pickerStyle}
                         >
                             {/* {this.props.pickerHour} */}
@@ -45,8 +76,11 @@ const AddForm = ({
                             <Picker.Item key={i} label={value} value={value} />)}
                         </Picker>
                         <Picker
-                        selectedValue={selectedValueMinute}
-                        onValueChange={onValueChangeMinute}
+                        selectedValue={this.props.minute}
+                        onValueChange={value => {
+                        this.props.updateAlarm({ prop: 'minute', value });
+                        this.setState({ minute: value });
+                        }}
                         style={pickerStyle}
                         >
                             {loopMinute.map((value, i) => 
@@ -55,16 +89,16 @@ const AddForm = ({
                     </View>
                     {/* tombol buat nambahin list */}
                     <Button
-                    onPress={onPress}
+                    onPress={this.onButtonAddPress.bind(this)}
                     styleButton={styleButton}
                     >
                         Add
                     </Button>
                 </View>
             </View>
-        </Modal>
-    );
-};
+        );
+    }
+}
 
 
 const styles = {
@@ -106,4 +140,9 @@ const styles = {
     },
 };
 
-export default AddForm;
+const mapStateToProps = state => {
+    const { text, hour, minute } = state.MainR;
+    return { text, hour, minute };
+};
+
+export default connect(mapStateToProps, { addList, updateAlarm, emptyAddForm })(AddForm);

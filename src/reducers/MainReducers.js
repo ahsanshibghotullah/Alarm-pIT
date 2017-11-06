@@ -1,5 +1,5 @@
 // import { REHYDRATE } from 'redux-persist/lib/constants';
-import { UPDATE_ALARM, ADD_LIST } from '../actions/types';
+import { ADD_LIST, UPDATE_ALARM, EMPTY_ADD_FORM } from '../actions/types';
 
 
 const INITIAL_STATE = {
@@ -7,8 +7,6 @@ const INITIAL_STATE = {
     text: '',
     hour: 0,
     minute: 0,
-    date: 0,
-    
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -17,8 +15,10 @@ export default (state = INITIAL_STATE, action) => {
         //  return action.payload.completeStore;
         case UPDATE_ALARM:
          return { ...state, [action.payload.prop]: action.payload.value };
-        case ADD_LIST:
-         return { ...state, listOfTasks: [...state.listOfTasks, action.payload] };
+        case EMPTY_ADD_FORM:
+         return INITIAL_STATE;
+        // case ADD_LIST:
+        //  return { ...state, listOfTasks: [...state.listOfTasks, action.payload] };
         default:
          return state;
     }

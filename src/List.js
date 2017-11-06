@@ -14,7 +14,7 @@ class List extends Component {
         const d = new Date();
         const date = (d.getHours() * 60) + (d.getMinutes());
         this.state = {
-            text: 'a',
+            text: '',
             hour: 0,
             minute: 0,
             date,
