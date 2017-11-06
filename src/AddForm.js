@@ -27,11 +27,9 @@ class AddForm extends Component {
     // }
 
     onButtonAddPress() {
-        const text = this.state.text;
-        const minute = this.state.minute;
-        const hour = this.state.hour;
+        const { text, hour, minute } = this.props;
         console.log({ text, hour, minute });
-        // this.props.addList({ text });
+        this.props.addList({ text, hour, minute });
         Actions.main();
         // this.setState({ text: '', minute: 0, hour: 0 });
     }

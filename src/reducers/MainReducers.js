@@ -16,9 +16,9 @@ export default (state = INITIAL_STATE, action) => {
         case UPDATE_ALARM:
          return { ...state, [action.payload.prop]: action.payload.value };
         case EMPTY_ADD_FORM:
-         return INITIAL_STATE;
-        // case ADD_LIST:
-        //  return { ...state, listOfTasks: [...state.listOfTasks, action.payload] };
+         return { ...state, text: '', hour: 0, minute: 0 };
+        case ADD_LIST:
+         return { ...state, listOfTasks: [...state.listOfTasks, action.payload] };
         default:
          return state;
     }

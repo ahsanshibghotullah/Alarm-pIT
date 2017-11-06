@@ -1,10 +1,10 @@
-// import _ from 'lodash';
+import _ from 'lodash';
 import React, { Component } from 'react';
 import { View, ListView } from 'react-native';
 import { Actions } from 'react-native-router-flux';
-// import { connect } from 'react-redux';
+import { connect } from 'react-redux';
 import { Button } from './component';
-// import { updateAlarm, addList } from './actions';
+import { addList } from './actions';
 import List from './List';
 
 class Main extends Component {
@@ -32,7 +32,7 @@ class Main extends Component {
     // }
 
     render() {
-        // console.log(this.props.listOfTasks);
+        console.log(this.props.listOfTasks);
         const { containerStyle, styleWrapButton, styleButton, styleText } = styles;
         return (
             <View style={containerStyle}>
@@ -91,12 +91,12 @@ const styles = {
     },
 };
 
-// const mapStateToProps = state => {
-//     const listOfTasks = _.map(state.MainR, (val, uid) => {
-//         return { ...val, uid };
-//     });
-//     // const { listOfTasks } = state.MainR;
-//     return { listOfTasks };
-// };
+const mapStateToProps = state => {
+    const listOfTasks = _.map(state.MainR.listOfTasks, (val, uid) => {
+        return { ...val, uid };
+    });
+    // const { listOfTasks } = state.MainR;
+    return { listOfTasks };
+};
 
-export default Main;
+export default connect(mapStateToProps, { addList, })(Main);
