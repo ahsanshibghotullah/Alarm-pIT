@@ -1,36 +1,35 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
-import PushNotification from 'react-native-push-notification';
+// import PushNotification from 'react-native-push-notification';
 
 class List extends Component {
-    constructor(props) {
-        super(props);
-        PushNotification.configure({            
-            onNotification: (notification) => {
-                console.log('NOTIFICATION:', notification);
-            }
-        });
+    // constructor(props) {
+    //     super(props);
+    //     PushNotification.configure({            
+    //         onNotification: (notification) => {
+    //             console.log('NOTIFICATION:', notification);
+    //         }
+    //     });
 
-        const d = new Date();
-        const date = (d.getHours() * 60) + (d.getMinutes());
-        this.state = {
+    //     const d = new Date();
+    //     const date = (d.getHours() * 60) + (d.getMinutes());
+        state = {
             text: '',
             hour: 0,
             minute: 0,
-            date,
         };
-    }
+    // }
     
     componentWillReceiveProps(nextProps) {
-        const text = nextProps.rowData.text;
-        const hour = nextProps.rowData.hour;
-        const minute = nextProps.rowData.minute;
-        // const hours = Number(hour);
-        // const minutes = Number(minute);
-        console.log(nextProps.rowData);
+        const text = nextProps.text;
+        const hour = nextProps.hour;
+        const minute = nextProps.minute;
+    //     // const hours = Number(hour);
+    //     // const minutes = Number(minute);
+        // console.log(text);
 
         this.setState({ text, hour, minute, });
-        // this.handleNotification(hours, minutes);
+    //     // this.handleNotification(hours, minutes);
     }
 
         // const schedule = (hour * 60) + minute;
@@ -44,14 +43,15 @@ class List extends Component {
         //     console.log(alarm);
 
     render() {
+        const { text, hour, minute } = this.props;
         const { story, storyText, setTime } = styles;
         return (
             <View style={story}>
                 <Text style={storyText}>
-                    {this.state.text + '  '}
+                    {text + '  '}
                     <Text style={setTime}>
-                        {this.state.hour}:
-                        {this.state.minute}
+                        {hour}:
+                        {minute}
                     </Text>
                 </Text>
             </View>

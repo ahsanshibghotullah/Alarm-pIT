@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
-import { View, ListView } from 'react-native';
+import { View, FlatList } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { Button } from './component';
@@ -13,7 +13,6 @@ class Main extends Component {
     // }
 
     // componentWillReceiveProps(nextProps) {
-
     //     this.createDataSource(nextProps);
     // }
 
@@ -25,23 +24,28 @@ class Main extends Component {
     //     this.dataSource = ds.cloneWithRows(listOfTasks);
     // }
 
-    // renderRowData(rowData) {
-    //     return (
-    //       <List rowData={rowData} />
-    //     );
-    // }
+    renderRowData({ item }) {
+        return (
+          <List 
+          text={item.text}
+          hour={item.hour}
+          minute={item.minute}
+          />
+        );
+    }
 
     render() {
         console.log(this.props.listOfTasks);
         const { containerStyle, styleWrapButton, styleButton, styleText } = styles;
+       
         return (
             <View style={containerStyle}>
                 <View style={{ flex: 1 }}>
-                    {/* <ListView 
-                    enableEmptySections
-                    dataSource={this.dataSource}
-                    renderRow={this.renderRowData}
-                    /> */}
+                    <FlatList
+                    data={this.props.listOfTasks}
+                    renderItem={this.renderRowData}
+                    keyExtractor={item => item.uid}
+                    />
                     <View style={styleWrapButton}>
                         <Button
                         styleButton={styleButton}
@@ -95,6 +99,7 @@ const mapStateToProps = state => {
     const listOfTasks = _.map(state.MainR.listOfTasks, (val, uid) => {
         return { ...val, uid };
     });
+    // const aku = JSON.stringify(state.MainR.listOfTasks);
     // const { listOfTasks } = state.MainR;
     return { listOfTasks };
 };
