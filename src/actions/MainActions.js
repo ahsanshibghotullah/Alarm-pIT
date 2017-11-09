@@ -13,9 +13,11 @@ export const emptyAddForm = () => {
     };
 };
 
-export const addList = ({ text, hour, minute, }) => {
+export const addList = ({ text, hour, minute }) => {
     return {
         type: ADD_LIST,
-        payload: { text, hour, minute, }
+        text,
+        hour,
+        minute
     };
 };

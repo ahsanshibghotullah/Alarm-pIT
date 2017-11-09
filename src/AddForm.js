@@ -139,7 +139,7 @@ const styles = {
 };
 
 const mapStateToProps = state => {
-    const { text, hour, minute } = state.MainR;
+    const { text, hour, minute } = state.updateReducers;
     return { text, hour, minute };
 };
 

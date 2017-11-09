@@ -1,6 +1,8 @@
 import { combineReducers } from 'redux';
-import MainReducers from './MainReducers';
+import mainReducers from './mainReducers';
+import updateReducers from './updateReducers';
 
 export default combineReducers({
-    MainR: MainReducers,
+    mainReducers,
+    updateReducers
 });

@@ -1,4 +1,4 @@
-import { createStore, compose } from 'redux';
+import { createStore } from 'redux';
 // import thunk from 'redux-thunk';
 import {
   persistStore,
@@ -13,16 +13,13 @@ const config = {
   storage: AsyncStorage,
 };
 
-const reducerses = persistCombineReducers(config, {
-  reducers,
-});
+const reducer = persistCombineReducers(config, reducers);
 
-export const configureStore = () => {
-  const store = createStore(
-    reducerses,
-    compose()
-  );
+const configureStore = () => {
+  const store = createStore(reducer);
   const persistor = persistStore(store);
 
   return { persistor, store };
 };
+
+export default configureStore;

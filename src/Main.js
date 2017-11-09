@@ -96,7 +96,7 @@ const styles = {
 };
 
 const mapStateToProps = state => {
-    const listOfTasks = _.map(state.MainR.listOfTasks, (val, uid) => {
+    const listOfTasks = _.map(state.mainReducers, (val, uid) => {
         return { ...val, uid };
     });
     // const aku = JSON.stringify(state.MainR.listOfTasks);
